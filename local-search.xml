@@ -4,7 +4,34 @@
   
   
   <entry>
-    <title>前端的性能优化</title>
+    <title>前端修改国内源</title>
+    <link href="/2023/08/04/mirror/"/>
+    <url>/2023/08/04/mirror/</url>
+    
+    <content type="html"><![CDATA[<h2 id="npm-国内源"><a href="#npm-国内源" class="headerlink" title="npm 国内源"></a>npm 国内源</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm config <span class="hljs-built_in">set</span> registry https://registry.npmmirror.com<br></code></pre></td></tr></table></figure><h2 id="nvm-国内源"><a href="#nvm-国内源" class="headerlink" title="nvm 国内源"></a>nvm 国内源</h2><ul><li>设置npm_mirror:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">nvm npm_mirror https://npmmirror.com/mirrors/npm/<br></code></pre></td></tr></table></figure></li><li>设置node_mirror:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">nvm node_mirror https://npmmirror.com/mirrors/node/<br></code></pre></td></tr></table></figure></li></ul><h2 id="electron-国内源"><a href="#electron-国内源" class="headerlink" title="electron 国内源"></a>electron 国内源</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># https://npmmirror.com/mirrors/electron/</span><br>npm config <span class="hljs-built_in">set</span> electron_mirror=https://npmmirror.com/mirrors/electron/<br>npm config <span class="hljs-built_in">set</span> electron_builder_binaries_mirror=https://npmmirror.com/mirrors/electron-builder-binaries/<br></code></pre></td></tr></table></figure><h2 id="镜像集合"><a href="#镜像集合" class="headerlink" title="镜像集合"></a>镜像集合</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># https://npmmirror.com/</span><br><span class="hljs-comment"># 开源镜像: https://npmmirror.com/mirrors/</span><br><span class="hljs-comment"># Node.js 镜像: https://npmmirror.com/mirrors/node/</span><br><span class="hljs-comment"># alinode 镜像: https://npmmirror.com/mirrors/alinode/</span><br><span class="hljs-comment"># ChromeDriver 镜像: https://npmmirror.com/mirrors/chromedriver/</span><br><span class="hljs-comment"># OperaDriver 镜像: https://npmmirror.com/mirrors/operadriver/</span><br><span class="hljs-comment"># Selenium 镜像: https://npmmirror.com/mirrors/selenium/</span><br><span class="hljs-comment"># electron 镜像: https://npmmirror.com/mirrors/electron/</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>前端工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>镜像</tag>
+      
+      <tag>国内源</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>前端性能优化</title>
     <link href="/2023/08/04/performance/"/>
     <url>/2023/08/04/performance/</url>
     
