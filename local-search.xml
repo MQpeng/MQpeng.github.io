@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Git添加代理</title>
+    <link href="/2023/08/09/git-slow/"/>
+    <url>/2023/08/09/git-slow/</url>
+    
+    <content type="html"><![CDATA[<p><code>git</code>连接<code>github</code>会很慢，本文主要记录一些<code>git</code>添加代理的一些方式</p><h2 id="设置全局git代理"><a href="#设置全局git代理" class="headerlink" title="设置全局git代理"></a>设置全局<code>git</code>代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global https.proxy http://127.0.0.1:1080<br><br>git config --global https.proxy https://127.0.0.1:1080<br></code></pre></td></tr></table></figure><h2 id="取消全局git代理"><a href="#取消全局git代理" class="headerlink" title="取消全局git代理"></a>取消全局<code>git</code>代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global --<span class="hljs-built_in">unset</span> http.proxy<br><br>git config --global --<span class="hljs-built_in">unset</span> https.proxy<br></code></pre></td></tr></table></figure><h2 id="单独为Github设置代理"><a href="#单独为Github设置代理" class="headerlink" title="单独为Github设置代理"></a>单独为<code>Github</code>设置代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global http.https://github.com.proxy socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>git</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>github</tag>
+      
+      <tag>git</tag>
+      
+      <tag>proxy</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>XY-Problem</title>
     <link href="/2023/08/09/XY-Problem/"/>
     <url>/2023/08/09/XY-Problem/</url>

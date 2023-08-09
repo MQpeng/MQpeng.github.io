@@ -16,22 +16,24 @@
   <meta name="author" content="Joker Spice">
   <meta name="keywords" content="">
   
-    <meta name="description" content="当你遇到一个问题，你首先想到的是如何解决它，而不是先思考为什么会出现这个问题。 What is XY-Problem?对于X-Y Problem的意思如下：  有人想解决问题X 他觉得Y可能是解决X问题的方法 但是他不知道Y应该怎么做 于是他去问别人Y应该怎么做？  简而言之，没有去问怎么解决问题X，而是去问解决方案Y应该怎么去实现和操作。于是乎：  热心的人们帮助并告诉这个人Y应该怎么搞，但是大">
+    <meta name="description" content="git连接github会很慢，本文主要记录一些git添加代理的一些方式 设置全局git代理123git config --global https.proxy http:&#x2F;&#x2F;127.0.0.1:1080git config --global https.proxy https:&#x2F;&#x2F;127.0.0.1:1080  取消全局git代理123git config --global --unset htt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XY-Problem">
-<meta property="og:url" content="https://mqpeng.github.io/2023/08/09/XY-Problem/index.html">
+<meta property="og:title" content="Git添加代理">
+<meta property="og:url" content="https://mqpeng.github.io/2023/08/09/git-slow/index.html">
 <meta property="og:site_name" content="JOS的故事">
-<meta property="og:description" content="当你遇到一个问题，你首先想到的是如何解决它，而不是先思考为什么会出现这个问题。 What is XY-Problem?对于X-Y Problem的意思如下：  有人想解决问题X 他觉得Y可能是解决X问题的方法 但是他不知道Y应该怎么做 于是他去问别人Y应该怎么做？  简而言之，没有去问怎么解决问题X，而是去问解决方案Y应该怎么去实现和操作。于是乎：  热心的人们帮助并告诉这个人Y应该怎么搞，但是大">
+<meta property="og:description" content="git连接github会很慢，本文主要记录一些git添加代理的一些方式 设置全局git代理123git config --global https.proxy http:&#x2F;&#x2F;127.0.0.1:1080git config --global https.proxy https:&#x2F;&#x2F;127.0.0.1:1080  取消全局git代理123git config --global --unset htt">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-09T07:46:06.000Z">
-<meta property="article:modified_time" content="2023-08-09T07:54:35.811Z">
+<meta property="article:published_time" content="2023-08-09T08:07:30.000Z">
+<meta property="article:modified_time" content="2023-08-09T08:11:04.641Z">
 <meta property="article:author" content="Joker Spice">
-<meta property="article:tag" content="问题思维模式">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="proxy">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>XY-Problem - JOS的故事</title>
+  <title>Git添加代理 - JOS的故事</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="XY-Problem"></span>
+            <span id="subtitle" data-typed-text="Git添加代理"></span>
           
         </div>
 
@@ -208,7 +210,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-09 15:46" pubdate>
+        <time datetime="2023-08-09 16:07" pubdate>
           2023年8月9日 下午
         </time>
       </span>
@@ -220,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          759 字
+          310 字
         
       </span>
     
@@ -231,7 +233,7 @@
         
         
         
-          7 分钟
+          3 分钟
         
       </span>
     
@@ -268,41 +270,17 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">XY-Problem</h1>
+            <h1 id="seo-header">Git添加代理</h1>
             
             
               <div class="markdown-body">
                 
-                <p>当你遇到一个问题，你首先想到的是如何解决它，而不是先思考为什么会出现这个问题。</p>
-<h2 id="What-is-XY-Problem"><a href="#What-is-XY-Problem" class="headerlink" title="What is XY-Problem?"></a>What is XY-Problem?</h2><p>对于X-Y Problem的意思如下：</p>
-<ol>
-<li>有人想解决问题X</li>
-<li>他觉得Y可能是解决X问题的方法</li>
-<li>但是他不知道Y应该怎么做</li>
-<li>于是他去问别人Y应该怎么做？</li>
-</ol>
-<p>简而言之，<strong>没有去问怎么解决问题X，而是去问解决方案Y应该怎么去实现和操作</strong>。于是乎：</p>
-<ol>
-<li>热心的人们帮助并告诉这个人Y应该怎么搞，但是大家都觉得Y这个方案有点怪异。</li>
-<li>在经过大量地讨论和浪费了大量的时间后，热心的人终于明白了原始的问题X是怎么一回事。</li>
-<li>于是大家都发现，Y根本就不是用来解决X的合适的方案。</li>
-</ol>
-<p>X-Y Problem最大的严重的问题就是：<strong>在一个根本错误的方向上浪费他人大量的时间和精力！</strong></p>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><ol>
-<li><p>大多数人有时候，非常容易把手段当目的，他们会用自己所喜欢的技术和方法来反推用户的需求，于是很有可能就会出现X-Y Problem – 也许解决用户需求最适合的技术方案是PC，但是我们要让他们用手机。</p>
-</li>
-<li><p>产品经理有时候并不清楚他想解决的用户需求是什么，于是他觉得可能开发Y的功能能够满足用户，于是他提出了Y的需求让技术人员去做，但那根本不是解决X问题的最佳方案。</p>
-</li>
-<li><p>因为公司或部门的一些战略安排，业务部门设计了相关的业务规划，然后这些业务规划更多的是公司想要的Y，而不是解决用户的X问题。</p>
-</li>
-<li><p>对于个人的职业发展，X是成长为有更强的技能和能力，这个可以拥有比别人更强的竞争力，从而可以有更好的报酬，但确走向了Y：全身心地追逐KPI。</p>
-</li>
-<li><p>本来我们想达成的X是做出更好和更有价值的产品，但最终走到了Y：通过各种手段提升安装量，点击量，在线量，用户量来衡量。</p>
-</li>
-<li><p>很多团队Leader都喜欢制造信息不平等，并不告诉团队某个事情的来由，掩盖X，而直接把要做的Y告诉团队，导致团队并不真正地理解，而产生了很多时间和经历的浪费。</p>
-</li>
-</ol>
+                <p><code>git</code>连接<code>github</code>会很慢，本文主要记录一些<code>git</code>添加代理的一些方式</p>
+<h2 id="设置全局git代理"><a href="#设置全局git代理" class="headerlink" title="设置全局git代理"></a>设置全局<code>git</code>代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global https.proxy http://127.0.0.1:1080<br><br>git config --global https.proxy https://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
 
+<h2 id="取消全局git代理"><a href="#取消全局git代理" class="headerlink" title="取消全局git代理"></a>取消全局<code>git</code>代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global --<span class="hljs-built_in">unset</span> http.proxy<br><br>git config --global --<span class="hljs-built_in">unset</span> https.proxy<br></code></pre></td></tr></table></figure>
+
+<h2 id="单独为Github设置代理"><a href="#单独为Github设置代理" class="headerlink" title="单独为Github设置代理"></a>单独为<code>Github</code>设置代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global http.https://github.com.proxy socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -320,7 +298,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%80%9D%E7%BB%B4/" class="category-chain-item">思维</a>
+  <a href="/categories/git/" class="category-chain-item">git</a>
   
   
 
@@ -335,7 +313,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E9%97%AE%E9%A2%98%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%BC%8F/" class="print-no-link">#问题思维模式</a>
+        <a href="/tags/github/" class="print-no-link">#github</a>
+      
+        <a href="/tags/git/" class="print-no-link">#git</a>
+      
+        <a href="/tags/proxy/" class="print-no-link">#proxy</a>
       
     </div>
   
@@ -347,8 +329,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>XY-Problem</div>
-      <div>https://mqpeng.github.io/2023/08/09/XY-Problem/</div>
+      <div>Git添加代理</div>
+      <div>https://mqpeng.github.io/2023/08/09/git-slow/</div>
     </div>
     <div class="license-meta">
       
@@ -392,18 +374,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/09/git-slow/" title="Git添加代理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Git添加代理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/04/mirror/" title="前端修改国内源">
-                        <span class="hidden-mobile">前端修改国内源</span>
+                      <a href="/2023/08/09/XY-Problem/" title="XY-Problem">
+                        <span class="hidden-mobile">XY-Problem</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
