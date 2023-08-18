@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>PNPM是什么以及为什么前端开发者应该尝试使用它</title>
+    <link href="/2023/08/18/pnpm/"/>
+    <url>/2023/08/18/pnpm/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是<a href="https://javascript.plainenglish.io/what-is-pnpm-why-you-should-try-it-as-a-frontend-developer-69a3a7b34f5b">《What is PNPM &amp; Why You Should Try It As a Frontend Developer》</a>的对照翻译</p></blockquote><p>了解 pnpm——<code>npm/yarn</code>的替代方案，了解其优点、依赖管理和用法。</p><p>前置疑问：为什么使用 PNPM，它有哪些学习点？</p><h2 id="什么是-pnpm"><a href="#什么是-pnpm" class="headerlink" title="什么是 pnpm?"></a>什么是 pnpm?</h2><p>正如<a href="https://pnpm.io/zh/">官网</a>所说，<strong>快速的，节省磁盘空间的包管理工具</strong></p><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ol><li>快速的</li></ol><p>以下是几个工具的比较：</p><p>可以看出，在大多数情况下，pnpm 作为黄色部分，包安装速度明显优于<code>npm/yarn</code>，速度会比<code>npm/yarn</code>快 2 倍。</p><table><thead><tr><th>action</th><th>cache</th><th>lockfile</th><th>node_modules</th><th>npm</th><th>pnpm</th><th>Yarn</th><th>Yarn PnP</th></tr></thead><tbody><tr><td>install</td><td></td><td></td><td></td><td>37.7s</td><td>19.3s</td><td>22.1s</td><td>20.2s</td></tr><tr><td>install</td><td>✔</td><td>✔</td><td>✔</td><td>2s</td><td>1.6s</td><td>695ms</td><td>n&#x2F;a</td></tr><tr><td>install</td><td>✔</td><td>✔</td><td></td><td>8.9s</td><td>5.1s</td><td>8.8s</td><td>668ms</td></tr><tr><td>install</td><td>✔</td><td></td><td></td><td>13.7s</td><td>8.6s</td><td>22.8s</td><td>15.2s</td></tr><tr><td>install</td><td></td><td>✔</td><td></td><td>14.2s</td><td>16.8s</td><td>8.9s</td><td>670ms</td></tr><tr><td>install</td><td>✔</td><td></td><td>✔</td><td>2.4s</td><td>3.9s</td><td>16s</td><td>n&#x2F;a</td></tr><tr><td>install</td><td></td><td>✔</td><td>✔</td><td>2s</td><td>1.6s</td><td>681ms</td><td>n&#x2F;a</td></tr><tr><td>install</td><td></td><td></td><td>✔</td><td>2.3s</td><td>15.2s</td><td>16.6s</td><td>n&#x2F;a</td></tr><tr><td>update</td><td>n&#x2F;a</td><td>n&#x2F;a</td><td>n&#x2F;a</td><td>8.9s</td><td>8s</td><td>8.7s</td><td>16.9s</td></tr></tbody></table><p><img src="/images/pnpm/alotta-files.svg" alt="Benchmarks"></p><p>总体而言，<code>pnpm</code>的包安装速度仍然明显优于 yarn。</p><ol start="2"><li>节省磁盘空间</li></ol><p>在内部管理中，<code>pnpm</code>使用内容可寻址的文件系统来存储磁盘上的所有文件。这个文件系统的优点是：</p><p>相同的包不会重复安装。当使用<code>npm/yarn</code>时，如果有 1000 个项目依赖于<code>lodash</code>，那么<code>lodash</code>可能会被安装 1000 次，并且这部分代码会在磁盘上被写入 1000 个地方。然而，当使用<code>pnpm</code>时，它只会安装一次，并且只在磁盘上写入一个地方。如果你再次使用它，你将会直接使用硬链接。</p><p>即使对于不同版本的包，<code>pnpm</code>也能够大大重用之前版本的代码。例如，如果<code>lodash</code>有 1000 个文件，并且在更新版本之后又增加了一个文件，那么磁盘将不会重写 1001 个文件，而是保留原来的 1000 个文件的硬链接，只写入新的一个文件。</p><ol start="3"><li>安全性高</li></ol><p>在使用<code>npm/yarn</code>之前，由于 node_module 的扁平结构，如果<code>A</code>依赖于<code>B</code>，<code>B</code>依赖于<code>C</code>，则<code>A</code>可以直接使用<code>C</code>，但问题是<code>A</code>没有声明<code>C</code>作为依赖项。因此，会出现这种非法访问的情况。然而，<code>pnpm</code>有非常大的“大脑洞”，并创建了一套依赖项管理方法，很好地解决了这个问题，并确保了安全性。</p><h2 id="pnpm依赖管理"><a href="#pnpm依赖管理" class="headerlink" title="pnpm依赖管理"></a><code>pnpm</code>依赖管理</h2><p>回顾一下<code>npm/yarn</code>为什么想要扁平化<code>node_modules</code>，难道不是因为相同的依赖项会被复制多次，路径也变得太长了吗？</p><p>如果你不复制文件，比如通过链接来替代呢？</p><p>首先，我将介绍链接，即软链接和硬链接。这是操作系统提供的机制。硬链接是同一文件的多个引用，而软链接则是创建一个新的文件，该文件的内容指向另一个路径。当然，这两种链接的使用方式是相似的。</p><p>如果你不复制文件，只需将<code>npm</code>包的内容保存在全局仓库中，然后将其他地方都链接起来。</p><p>这样，就不会有多个拷贝导致的浪费磁盘空间的问题，也不会有路径过长的问题。因为路径过长的主要限制是目录层次结构不能太深，现在每个位置的目录都是链接，而不是同一个目录，所以没有长度限制。</p><p>没错，<code>pnpm</code>就是通过这个想法实现的。</p><p>然后删除 node_modules，然后使用<code>pnpm</code>重新安装它，并执行<code>pnpm install</code>。</p><p>你会发现它打印出这句话：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">pnpm install<br></code></pre></td></tr></table></figure><p><img src="/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp" alt="output"><br>展开<code>.pnpm</code>文件夹可以看待<br><img src="/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp" alt=".pnpm"><br>所有依赖项都布局在这里，通过全局存储硬连接，然后通过软链接组织包到包的依赖项。<br>例如，在.pnpm 下的 express，这些是软链接<br><img src="/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp" alt=".pnpm"><br>也就是说，所有依赖项都从全局存储硬链接到 node_modules&#x2F;.pnpm，然后通过软链接相互依赖。</p><p>官方提供了一个示意图，您可以一起查看以理解它：<br><img src="/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp" alt=".pnpm"></p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="pnpm-install"><a href="#pnpm-install" class="headerlink" title="pnpm install"></a>pnpm install</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># Install axios</span><br>pnpm install axios<br><span class="hljs-comment"># Install axios and add axios to devDependencies</span><br>pnpm install axios -D<br><span class="hljs-comment"># Install axios and add axios to dependencies</span><br>pnpm install axios -S<br></code></pre></td></tr></table></figure><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>感谢谢阅读</strong>，我期待着您的关注和阅读更多高质量的文章。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>前端基础</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>pnpm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>golang实现任务池管理器</title>
     <link href="/2023/08/16/task-pool-go/"/>
     <url>/2023/08/16/task-pool-go/</url>

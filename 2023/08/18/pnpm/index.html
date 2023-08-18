@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Joker Spice">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PNPM是什么以及为什么前端开发者应该尝试使用它">
+<meta property="og:url" content="https://mqpeng.github.io/2023/08/18/pnpm/index.html">
+<meta property="og:site_name" content="Jess&#39;s Blog">
+<meta property="og:description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
+<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp">
+<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp">
+<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp">
+<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp">
+<meta property="article:published_time" content="2023-08-18T06:28:55.000Z">
+<meta property="article:modified_time" content="2023-08-18T06:52:16.823Z">
+<meta property="article:author" content="Joker Spice">
+<meta property="article:tag" content="pnpm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>PNPM是什么以及为什么前端开发者应该尝试使用它 - Jess&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"mqpeng.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 45vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jess&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PNPM是什么以及为什么前端开发者应该尝试使用它"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-18 14:28" pubdate>
+          2023年8月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PNPM是什么以及为什么前端开发者应该尝试使用它</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本文是<a target="_blank" rel="noopener" href="https://javascript.plainenglish.io/what-is-pnpm-why-you-should-try-it-as-a-frontend-developer-69a3a7b34f5b">《What is PNPM &amp; Why You Should Try It As a Frontend Developer》</a>的对照翻译</p>
+</blockquote>
+<p>了解 pnpm——<code>npm/yarn</code>的替代方案，了解其优点、依赖管理和用法。</p>
+<p>前置疑问：为什么使用 PNPM，它有哪些学习点？</p>
+<h2 id="什么是-pnpm"><a href="#什么是-pnpm" class="headerlink" title="什么是 pnpm?"></a>什么是 pnpm?</h2><p>正如<a target="_blank" rel="noopener" href="https://pnpm.io/zh/">官网</a>所说，<strong>快速的，节省磁盘空间的包管理工具</strong></p>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ol>
+<li>快速的</li>
+</ol>
+<p>以下是几个工具的比较：</p>
+<p>可以看出，在大多数情况下，pnpm 作为黄色部分，包安装速度明显优于<code>npm/yarn</code>，速度会比<code>npm/yarn</code>快 2 倍。</p>
+<table>
+<thead>
+<tr>
+<th>action</th>
+<th>cache</th>
+<th>lockfile</th>
+<th>node_modules</th>
+<th>npm</th>
+<th>pnpm</th>
+<th>Yarn</th>
+<th>Yarn PnP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>install</td>
+<td></td>
+<td></td>
+<td></td>
+<td>37.7s</td>
+<td>19.3s</td>
+<td>22.1s</td>
+<td>20.2s</td>
+</tr>
+<tr>
+<td>install</td>
+<td>✔</td>
+<td>✔</td>
+<td>✔</td>
+<td>2s</td>
+<td>1.6s</td>
+<td>695ms</td>
+<td>n&#x2F;a</td>
+</tr>
+<tr>
+<td>install</td>
+<td>✔</td>
+<td>✔</td>
+<td></td>
+<td>8.9s</td>
+<td>5.1s</td>
+<td>8.8s</td>
+<td>668ms</td>
+</tr>
+<tr>
+<td>install</td>
+<td>✔</td>
+<td></td>
+<td></td>
+<td>13.7s</td>
+<td>8.6s</td>
+<td>22.8s</td>
+<td>15.2s</td>
+</tr>
+<tr>
+<td>install</td>
+<td></td>
+<td>✔</td>
+<td></td>
+<td>14.2s</td>
+<td>16.8s</td>
+<td>8.9s</td>
+<td>670ms</td>
+</tr>
+<tr>
+<td>install</td>
+<td>✔</td>
+<td></td>
+<td>✔</td>
+<td>2.4s</td>
+<td>3.9s</td>
+<td>16s</td>
+<td>n&#x2F;a</td>
+</tr>
+<tr>
+<td>install</td>
+<td></td>
+<td>✔</td>
+<td>✔</td>
+<td>2s</td>
+<td>1.6s</td>
+<td>681ms</td>
+<td>n&#x2F;a</td>
+</tr>
+<tr>
+<td>install</td>
+<td></td>
+<td></td>
+<td>✔</td>
+<td>2.3s</td>
+<td>15.2s</td>
+<td>16.6s</td>
+<td>n&#x2F;a</td>
+</tr>
+<tr>
+<td>update</td>
+<td>n&#x2F;a</td>
+<td>n&#x2F;a</td>
+<td>n&#x2F;a</td>
+<td>8.9s</td>
+<td>8s</td>
+<td>8.7s</td>
+<td>16.9s</td>
+</tr>
+</tbody></table>
+<p><img src="/images/pnpm/alotta-files.svg" srcset="/img/loading.gif" lazyload alt="Benchmarks"></p>
+<p>总体而言，<code>pnpm</code>的包安装速度仍然明显优于 yarn。</p>
+<ol start="2">
+<li>节省磁盘空间</li>
+</ol>
+<p>在内部管理中，<code>pnpm</code>使用内容可寻址的文件系统来存储磁盘上的所有文件。这个文件系统的优点是：</p>
+<p>相同的包不会重复安装。当使用<code>npm/yarn</code>时，如果有 1000 个项目依赖于<code>lodash</code>，那么<code>lodash</code>可能会被安装 1000 次，并且这部分代码会在磁盘上被写入 1000 个地方。然而，当使用<code>pnpm</code>时，它只会安装一次，并且只在磁盘上写入一个地方。如果你再次使用它，你将会直接使用硬链接。</p>
+<p>即使对于不同版本的包，<code>pnpm</code>也能够大大重用之前版本的代码。例如，如果<code>lodash</code>有 1000 个文件，并且在更新版本之后又增加了一个文件，那么磁盘将不会重写 1001 个文件，而是保留原来的 1000 个文件的硬链接，只写入新的一个文件。</p>
+<ol start="3">
+<li>安全性高</li>
+</ol>
+<p>在使用<code>npm/yarn</code>之前，由于 node_module 的扁平结构，如果<code>A</code>依赖于<code>B</code>，<code>B</code>依赖于<code>C</code>，则<code>A</code>可以直接使用<code>C</code>，但问题是<code>A</code>没有声明<code>C</code>作为依赖项。因此，会出现这种非法访问的情况。然而，<code>pnpm</code>有非常大的“大脑洞”，并创建了一套依赖项管理方法，很好地解决了这个问题，并确保了安全性。</p>
+<h2 id="pnpm依赖管理"><a href="#pnpm依赖管理" class="headerlink" title="pnpm依赖管理"></a><code>pnpm</code>依赖管理</h2><p>回顾一下<code>npm/yarn</code>为什么想要扁平化<code>node_modules</code>，难道不是因为相同的依赖项会被复制多次，路径也变得太长了吗？</p>
+<p>如果你不复制文件，比如通过链接来替代呢？</p>
+<p>首先，我将介绍链接，即软链接和硬链接。这是操作系统提供的机制。硬链接是同一文件的多个引用，而软链接则是创建一个新的文件，该文件的内容指向另一个路径。当然，这两种链接的使用方式是相似的。</p>
+<p>如果你不复制文件，只需将<code>npm</code>包的内容保存在全局仓库中，然后将其他地方都链接起来。</p>
+<p>这样，就不会有多个拷贝导致的浪费磁盘空间的问题，也不会有路径过长的问题。因为路径过长的主要限制是目录层次结构不能太深，现在每个位置的目录都是链接，而不是同一个目录，所以没有长度限制。</p>
+<p>没错，<code>pnpm</code>就是通过这个想法实现的。</p>
+<p>然后删除 node_modules，然后使用<code>pnpm</code>重新安装它，并执行<code>pnpm install</code>。</p>
+<p>你会发现它打印出这句话：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">pnpm install<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp" srcset="/img/loading.gif" lazyload alt="output"><br>展开<code>.pnpm</code>文件夹可以看待<br><img src="/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>所有依赖项都布局在这里，通过全局存储硬连接，然后通过软链接组织包到包的依赖项。<br>例如，在.pnpm 下的 express，这些是软链接<br><img src="/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>也就是说，所有依赖项都从全局存储硬链接到 node_modules&#x2F;.pnpm，然后通过软链接相互依赖。</p>
+<p>官方提供了一个示意图，您可以一起查看以理解它：<br><img src="/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="pnpm-install"><a href="#pnpm-install" class="headerlink" title="pnpm install"></a>pnpm install</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># Install axios</span><br>pnpm install axios<br><span class="hljs-comment"># Install axios and add axios to devDependencies</span><br>pnpm install axios -D<br><span class="hljs-comment"># Install axios and add axios to dependencies</span><br>pnpm install axios -S<br></code></pre></td></tr></table></figure>
+
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>感谢谢阅读</strong>，我期待着您的关注和阅读更多高质量的文章。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="category-chain-item">前端基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/pnpm/" class="print-no-link">#pnpm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PNPM是什么以及为什么前端开发者应该尝试使用它</div>
+      <div>https://mqpeng.github.io/2023/08/18/pnpm/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Joker Spice</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/16/task-pool-go/" title="golang实现任务池管理器">
+                        <span class="hidden-mobile">golang实现任务池管理器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
