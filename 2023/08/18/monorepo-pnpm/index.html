@@ -16,30 +16,29 @@
   <meta name="author" content="Joker Spice">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+    <meta name="description" content="本文是monorepo.tools的对照翻译  如何理解Monorepos目前，Monorepos非常热门，尤其是在Web开发人员中。我们创建了这些资源来帮助开发人员了解什么是monorepos，它们能带来什么好处，以及可用的工具来使monorepo开发令人愉快。有许多优秀的monorepo工具，由伟大的团队建立，具有不同的理念。我们尽最大努力客观地代表每个工具，如果我们做错了什么，我们欢迎拉取">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PNPM是什么以及为什么前端开发者应该尝试使用它">
-<meta property="og:url" content="https://mqpeng.github.io/2023/08/18/pnpm/index.html">
+<meta property="og:title" content="monorepo.tools(monorepo深入浅出及其工具)">
+<meta property="og:url" content="https://mqpeng.github.io/2023/08/18/monorepo-pnpm/index.html">
 <meta property="og:site_name" content="Jess&#39;s Blog">
-<meta property="og:description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+<meta property="og:description" content="本文是monorepo.tools的对照翻译  如何理解Monorepos目前，Monorepos非常热门，尤其是在Web开发人员中。我们创建了这些资源来帮助开发人员了解什么是monorepos，它们能带来什么好处，以及可用的工具来使monorepo开发令人愉快。有许多优秀的monorepo工具，由伟大的团队建立，具有不同的理念。我们尽最大努力客观地代表每个工具，如果我们做错了什么，我们欢迎拉取">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp">
-<meta property="article:published_time" content="2023-08-18T06:28:55.000Z">
-<meta property="article:modified_time" content="2023-08-18T06:52:16.823Z">
+<meta property="og:image" content="https://mqpeng.github.io/images/monorepo-pnpm/polyrepo-practice.svg">
+<meta property="og:image" content="https://mqpeng.github.io/images/monorepo-pnpm/spectrum-real-world.svg">
+<meta property="og:image" content="https://mqpeng.github.io/images/monorepo-pnpm/tools.png">
+<meta property="article:published_time" content="2023-08-18T06:56:28.000Z">
+<meta property="article:modified_time" content="2023-08-22T10:07:33.468Z">
 <meta property="article:author" content="Joker Spice">
-<meta property="article:tag" content="pnpm">
+<meta property="article:tag" content="工程化">
+<meta property="article:tag" content="monorepo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
+<meta name="twitter:image" content="https://mqpeng.github.io/images/monorepo-pnpm/polyrepo-practice.svg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>PNPM是什么以及为什么前端开发者应该尝试使用它 - Jess&#39;s Blog</title>
+  <title>monorepo.tools(monorepo深入浅出及其工具) - Jess&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="PNPM是什么以及为什么前端开发者应该尝试使用它"></span>
+            <span id="subtitle" data-typed-text="monorepo.tools(monorepo深入浅出及其工具)"></span>
           
         </div>
 
@@ -216,7 +215,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-18 14:28" pubdate>
+        <time datetime="2023-08-18 14:56" pubdate>
           2023年8月18日 下午
         </time>
       </span>
@@ -228,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.3k 字
         
       </span>
     
@@ -239,7 +238,7 @@
         
         
         
-          15 分钟
+          20 分钟
         
       </span>
     
@@ -284,153 +283,118 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">PNPM是什么以及为什么前端开发者应该尝试使用它</h1>
+            <h1 id="seo-header">monorepo.tools(monorepo深入浅出及其工具)</h1>
             
             
               <div class="markdown-body">
                 
                 <blockquote>
-<p>本文是<a target="_blank" rel="noopener" href="https://javascript.plainenglish.io/what-is-pnpm-why-you-should-try-it-as-a-frontend-developer-69a3a7b34f5b">《What is PNPM &amp; Why You Should Try It As a Frontend Developer》</a>的对照翻译</p>
+<p>本文是<a target="_blank" rel="noopener" href="https://monorepo.tools/#understanding-monorepos">monorepo.tools</a>的对照翻译</p>
 </blockquote>
-<p>了解 pnpm——<code>npm/yarn</code>的替代方案，了解其优点、依赖管理和用法。</p>
-<p>前置疑问：为什么使用 PNPM，它有哪些学习点？</p>
-<h2 id="什么是-pnpm"><a href="#什么是-pnpm" class="headerlink" title="什么是 pnpm?"></a>什么是 pnpm?</h2><p>正如<a target="_blank" rel="noopener" href="https://pnpm.io/zh/">官网</a>所说，<strong>快速的，节省磁盘空间的包管理工具</strong></p>
-<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ol>
-<li>快速的</li>
-</ol>
-<p>以下是几个工具的比较：</p>
-<p>可以看出，在大多数情况下，pnpm 作为黄色部分，包安装速度明显优于<code>npm/yarn</code>，速度会比<code>npm/yarn</code>快 2 倍。</p>
+<h2 id="如何理解Monorepos"><a href="#如何理解Monorepos" class="headerlink" title="如何理解Monorepos"></a>如何理解<code>Monorepos</code></h2><p>目前，<code>Monorepos</code>非常热门，尤其是在<code>Web</code>开发人员中。我们创建了这些资源来帮助开发人员了解什么是<code>monorepos</code>，它们能带来什么好处，以及可用的工具来使<code>monorepo</code>开发令人愉快。有许多优秀的<code>monorepo</code>工具，由伟大的团队建立，具有不同的理念。我们尽最大努力客观地代表每个工具，如果我们做错了什么，我们欢迎拉取请求！我们将重点关注的工具有：<code>Bazel</code>（由Google）、<code>Gradle Build Tool</code>（由Gradle公司）、<code>Lage</code>（由微软）、<code>Lerna</code>、<code>Nx</code>（由Nrwl）、<code>Pants</code>（由Pants Build社区）、<code>Rush</code>（由微软）和<code>Turborepo</code>（由Vercel）。我们选择这些工具是因为它们在Web开发社区中的使用或认可。</p>
+<h2 id="什么是Monorepos？"><a href="#什么是Monorepos？" class="headerlink" title="什么是Monorepos？"></a>什么是<code>Monorepos</code>？</h2><p>让我们来定义一下我们和其他人谈论<code>Monorepos</code>时的意思。</p>
+<p><strong><code>Monorepos</code>是一个包含多个不同项目、具有明确定义关系的单一存储库</strong>。<code>Nrwl</code>认为，在所有已建立的<code>Monorepos</code>工具中，这是对单仓库最一致、最准确的陈述。</p>
+<h3 id="不只是-Code-Colocation"><a href="#不只是-Code-Colocation" class="headerlink" title="不只是 Code Colocation"></a>不只是 <code>Code Colocation</code></h3><p>考虑一个包含多个项目的存储库。我们确实有<code>Code Colocation</code>，但如果它们之间没有明确的定义关系，我们不会将其称<code>Monorepo</code>。</p>
+<p>同样，如果一个存储库包含一个没有分隔和封装的不连续部分的大规模应用程序，它只是一个大型存储库。你可以给它一个花哨的名字，比如<code>Garganturepo</code>，但很遗憾，它不是<code>Monorepo</code>。</p>
+<p>事实上，这样的存储库是极其单一的，而这往往是人们想到<code>Monorepo</code>时首先想到的事情。继续阅读，您会发现一个好的<code>Monorepo</code>与<code>Monolith</code>恰恰相反。</p>
+<blockquote>
+<p>A good monorepo is the opposite of monolithic! Read more about this and other misconceptions in the article on <a target="_blank" rel="noopener" href="https://blog.nrwl.io/misconceptions-about-monorepos-monorepo-monolith-df1250d4b03c">“Misconceptions about Monorepos: Monorepo !&#x3D; Monolith”</a>.</p>
+</blockquote>
+<h2 id="为什么是Monorepos-But-why"><a href="#为什么是Monorepos-But-why" class="headerlink" title="为什么是Monorepos?(But why?)"></a>为什么是<code>Monorepos</code>?(But why?)</h2><blockquote>
+<p>让我们更深入地了解这个”无底洞”<br>Let’s go deeper into the rabbit hole.</p>
+</blockquote>
+<h3 id="Polyrepo"><a href="#Polyrepo" class="headerlink" title="Polyrepo"></a>Polyrepo</h3><p>为了便于讨论，我们假设 <code>Monorepos</code> 的反义词是<code>Polyrepo</code>。<code>Polyrepo</code>是当前开发应用程序的标准方法: 针对每个团队、应用程序或项目的<code>repo</code>。通常每个回购都有一个构建工件和简单的构建管道。<br><img src="/images/monorepo-pnpm/polyrepo-practice.svg" srcset="/img/loading.gif" lazyload alt="Polyrepo"><br>这个行业已经转向了多方代理的方式，这有一个重要的原因：<strong>团队自治</strong>。团队希望自己决定使用哪些库、何时部署应用或库，以及谁可以贡献或使用他们的代码。<br><img src="/images/monorepo-pnpm/spectrum-real-world.svg" srcset="/img/loading.gif" lazyload alt="Team Autonomy"><br>这些都是好事，为什么团队不应该有所不同？因为这种自主权是由隔离提供的，而隔离损害了协作。更具体地说，这些是<code>Polyrepo</code>环境的常见缺点：</p>
+<ul>
+<li>代码共享繁琐</li>
+</ul>
+<p>要在多个存储库之间共享代码，您可能需要为共享代码创建一个存储库。现在，您必须设置工具和CI环境，向存储库添加提交者，并设置包发布，以便其他存储库可以依赖它。并且，我们不要着手协调不兼容的第三方库版本在存储库中的不兼容版本。</p>
+<ul>
+<li>代码重复严重</li>
+</ul>
+<p>没有人愿意经历建立共享库的麻烦，所以团队只需在每个库中编写自己的常用服务和组件的实现。这会浪费前期时间，但随着组件和服务的变化，也会增加维护、安全和质量控制的负担。</p>
+<ul>
+<li>对共享库和使用者产生昂贵的交叉存储更改</li>
+</ul>
+<p>考虑一个共享库中的关键错误或突破性变化：开发人员需要设置他们的环境，以便在具有不连续修订历史的多个存储库中应用更改。更不用说对软件包进行版本控制和发布的协调工作了。</p>
+<ul>
+<li>工具不一致</li>
+</ul>
+<p>每个项目都使用自己的命令集来运行测试、构建、提供服务、lint、部署等等。不一致会造成记住项目间使用哪些命令的心理负担。</p>
+<h3 id="Monorepo"><a href="#Monorepo" class="headerlink" title="Monorepo"></a>Monorepo</h3><p>在多重代理中工作时，我们可能会陷入非常棘手的境地。但是，<code>Monorepo</code>如何帮助解决所有这些问题呢？</p>
+<ul>
+<li>没有创建新项目的开销</li>
+</ul>
+<p>使用现有的CI设置，如果所有使用者都在同一个存储库中，则无需发布版本化包。</p>
+<ul>
+<li>各项目的原子性提交</li>
+</ul>
+<p>每一次提交，所有事情都协同工作。当你在同一个提交中修复所有内容时，没有所谓的破坏性变更。</p>
+<ul>
+<li>万物一版本</li>
+</ul>
+<p>不需要担心由于项目依赖于第三方库的冲突版本而导致的不兼容性。</p>
+<ul>
+<li>更强的开发自由</li>
+</ul>
+<p>获得使用不同工具和技术编写的应用程序的一致构建和测试方法。开发人员可以放心地为其他团队的应用程序做出贡献，并验证他们的更改是安全的。</p>
+<h3 id="Monorepo-的特征"><a href="#Monorepo-的特征" class="headerlink" title="Monorepo 的特征"></a>Monorepo 的特征</h3><p><code>Monorepo</code>有很多优点，但要使其发挥作用，您需要有合适的工具。随着工作空间的增长，工具必须帮助你保持快速、可理解和可管理。</p>
 <table>
 <thead>
 <tr>
-<th>action</th>
-<th>cache</th>
-<th>lockfile</th>
-<th>node_modules</th>
-<th>npm</th>
-<th>pnpm</th>
-<th>Yarn</th>
-<th>Yarn PnP</th>
+<th>特性</th>
+<th>优点</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>install</td>
-<td></td>
-<td></td>
-<td></td>
-<td>37.7s</td>
-<td>19.3s</td>
-<td>22.1s</td>
-<td>20.2s</td>
+<td>Local computation caching</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>2s</td>
-<td>1.6s</td>
-<td>695ms</td>
-<td>n&#x2F;a</td>
+<td>Local task orchestration</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td>✔</td>
-<td>✔</td>
-<td></td>
-<td>8.9s</td>
-<td>5.1s</td>
-<td>8.8s</td>
-<td>668ms</td>
+<td>Distributed computation caching</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td>✔</td>
-<td></td>
-<td></td>
-<td>13.7s</td>
-<td>8.6s</td>
-<td>22.8s</td>
-<td>15.2s</td>
+<td>Distributed task execution</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td></td>
-<td>✔</td>
-<td></td>
-<td>14.2s</td>
-<td>16.8s</td>
-<td>8.9s</td>
-<td>670ms</td>
+<td>Transparent remote execution</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td>✔</td>
-<td></td>
-<td>✔</td>
-<td>2.4s</td>
-<td>3.9s</td>
-<td>16s</td>
-<td>n&#x2F;a</td>
+<td>Detecting affected projects&#x2F;packages</td>
+<td>Fast</td>
 </tr>
 <tr>
-<td>install</td>
-<td></td>
-<td>✔</td>
-<td>✔</td>
-<td>2s</td>
-<td>1.6s</td>
-<td>681ms</td>
-<td>n&#x2F;a</td>
+<td>Workspace analysis</td>
+<td>Understandable</td>
 </tr>
 <tr>
-<td>install</td>
-<td></td>
-<td></td>
-<td>✔</td>
-<td>2.3s</td>
-<td>15.2s</td>
-<td>16.6s</td>
-<td>n&#x2F;a</td>
+<td>Dependency graph visualization</td>
+<td>Understandable</td>
 </tr>
 <tr>
-<td>update</td>
-<td>n&#x2F;a</td>
-<td>n&#x2F;a</td>
-<td>n&#x2F;a</td>
-<td>8.9s</td>
-<td>8s</td>
-<td>8.7s</td>
-<td>16.9s</td>
+<td>Code sharing</td>
+<td>Manageable</td>
+</tr>
+<tr>
+<td>Consistent tooling</td>
+<td>Manageable</td>
+</tr>
+<tr>
+<td>Code generation</td>
+<td>Manageable</td>
+</tr>
+<tr>
+<td>Project constraints and visibility</td>
+<td>Manageable</td>
 </tr>
 </tbody></table>
-<p><img src="/images/pnpm/alotta-files.svg" srcset="/img/loading.gif" lazyload alt="Benchmarks"></p>
-<p>总体而言，<code>pnpm</code>的包安装速度仍然明显优于 yarn。</p>
-<ol start="2">
-<li>节省磁盘空间</li>
-</ol>
-<p>在内部管理中，<code>pnpm</code>使用内容可寻址的文件系统来存储磁盘上的所有文件。这个文件系统的优点是：</p>
-<p>相同的包不会重复安装。当使用<code>npm/yarn</code>时，如果有 1000 个项目依赖于<code>lodash</code>，那么<code>lodash</code>可能会被安装 1000 次，并且这部分代码会在磁盘上被写入 1000 个地方。然而，当使用<code>pnpm</code>时，它只会安装一次，并且只在磁盘上写入一个地方。如果你再次使用它，你将会直接使用硬链接。</p>
-<p>即使对于不同版本的包，<code>pnpm</code>也能够大大重用之前版本的代码。例如，如果<code>lodash</code>有 1000 个文件，并且在更新版本之后又增加了一个文件，那么磁盘将不会重写 1001 个文件，而是保留原来的 1000 个文件的硬链接，只写入新的一个文件。</p>
-<ol start="3">
-<li>安全性高</li>
-</ol>
-<p>在使用<code>npm/yarn</code>之前，由于 node_module 的扁平结构，如果<code>A</code>依赖于<code>B</code>，<code>B</code>依赖于<code>C</code>，则<code>A</code>可以直接使用<code>C</code>，但问题是<code>A</code>没有声明<code>C</code>作为依赖项。因此，会出现这种非法访问的情况。然而，<code>pnpm</code>有非常大的“大脑洞”，并创建了一套依赖项管理方法，很好地解决了这个问题，并确保了安全性。</p>
-<h2 id="pnpm依赖管理"><a href="#pnpm依赖管理" class="headerlink" title="pnpm依赖管理"></a><code>pnpm</code>依赖管理</h2><p>回顾一下<code>npm/yarn</code>为什么想要扁平化<code>node_modules</code>，难道不是因为相同的依赖项会被复制多次，路径也变得太长了吗？</p>
-<p>如果你不复制文件，比如通过链接来替代呢？</p>
-<p>首先，我将介绍链接，即软链接和硬链接。这是操作系统提供的机制。硬链接是同一文件的多个引用，而软链接则是创建一个新的文件，该文件的内容指向另一个路径。当然，这两种链接的使用方式是相似的。</p>
-<p>如果你不复制文件，只需将<code>npm</code>包的内容保存在全局仓库中，然后将其他地方都链接起来。</p>
-<p>这样，就不会有多个拷贝导致的浪费磁盘空间的问题，也不会有路径过长的问题。因为路径过长的主要限制是目录层次结构不能太深，现在每个位置的目录都是链接，而不是同一个目录，所以没有长度限制。</p>
-<p>没错，<code>pnpm</code>就是通过这个想法实现的。</p>
-<p>然后删除 node_modules，然后使用<code>pnpm</code>重新安装它，并执行<code>pnpm install</code>。</p>
-<p>你会发现它打印出这句话：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">pnpm install<br></code></pre></td></tr></table></figure>
-
-<p><img src="/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp" srcset="/img/loading.gif" lazyload alt="output"><br>展开<code>.pnpm</code>文件夹可以看待<br><img src="/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>所有依赖项都布局在这里，通过全局存储硬连接，然后通过软链接组织包到包的依赖项。<br>例如，在.pnpm 下的 express，这些是软链接<br><img src="/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>也就是说，所有依赖项都从全局存储硬链接到 node_modules&#x2F;.pnpm，然后通过软链接相互依赖。</p>
-<p>官方提供了一个示意图，您可以一起查看以理解它：<br><img src="/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="pnpm-install"><a href="#pnpm-install" class="headerlink" title="pnpm install"></a>pnpm install</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># Install axios</span><br>pnpm install axios<br><span class="hljs-comment"># Install axios and add axios to devDependencies</span><br>pnpm install axios -D<br><span class="hljs-comment"># Install axios and add axios to dependencies</span><br>pnpm install axios -S<br></code></pre></td></tr></table></figure>
-
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>感谢谢阅读</strong>，我期待着您的关注和阅读更多高质量的文章。</p>
+<h2 id="Monorepo-工具"><a href="#Monorepo-工具" class="headerlink" title="Monorepo 工具"></a>Monorepo 工具</h2><p><img src="/images/monorepo-pnpm/tools.png" srcset="/img/loading.gif" lazyload alt="Monorepo Tools"></p>
 
                 
               </div>
@@ -449,7 +413,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="category-chain-item">前端基础</a>
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="category-chain-item">前端工程化</a>
   
   
 
@@ -464,7 +428,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/pnpm/" class="print-no-link">#pnpm</a>
+        <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="print-no-link">#工程化</a>
+      
+        <a href="/tags/monorepo/" class="print-no-link">#monorepo</a>
       
     </div>
   
@@ -476,8 +442,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>PNPM是什么以及为什么前端开发者应该尝试使用它</div>
-      <div>https://mqpeng.github.io/2023/08/18/pnpm/</div>
+      <div>monorepo.tools(monorepo深入浅出及其工具)</div>
+      <div>https://mqpeng.github.io/2023/08/18/monorepo-pnpm/</div>
     </div>
     <div class="license-meta">
       
@@ -521,18 +487,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/18/monorepo-pnpm/" title="monorepo.tools(monorepo深入浅出及其工具)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">monorepo.tools(monorepo深入浅出及其工具)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/16/task-pool-go/" title="golang实现任务池管理器">
-                        <span class="hidden-mobile">golang实现任务池管理器</span>
+                      <a href="/2023/08/18/pnpm/" title="PNPM是什么以及为什么前端开发者应该尝试使用它">
+                        <span class="hidden-mobile">PNPM是什么以及为什么前端开发者应该尝试使用它</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
