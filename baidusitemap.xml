@@ -2,7 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mqpeng.github.io/2023/08/18/monorepo-pnpm/</loc>
-    <lastmod>2023-08-22</lastmod>
+    <lastmod>2023-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://mqpeng.github.io/2023/10/12/vue-dep/</loc>
+    <lastmod>2023-10-12</lastmod>
   </url>
   <url>
     <loc>https://mqpeng.github.io/2023/08/18/pnpm/</loc>

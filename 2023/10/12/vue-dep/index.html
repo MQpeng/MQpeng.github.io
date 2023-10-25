@@ -16,30 +16,26 @@
   <meta name="author" content="Joker Spice">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+    <meta name="description" content="本文从源码层面进行分析，结合了实际vue项目经验，梳理vue的依赖收集，分析的vue版本为3.3.3本文适合有一定实战经验或阅读经验的vue开发者  响应式基础在了解依赖收集前，我们先了解下vue是如何书写响应式的。 12345&lt;!-- 模板代码 --&gt;&lt;template&gt;    &lt;div&gt;count：&amp;#123;&amp;#123; count &amp;#125;&amp;#12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PNPM是什么以及为什么前端开发者应该尝试使用它">
-<meta property="og:url" content="https://mqpeng.github.io/2023/08/18/pnpm/index.html">
+<meta property="og:title" content="vue是如何收集依赖的">
+<meta property="og:url" content="https://mqpeng.github.io/2023/10/12/vue-dep/index.html">
 <meta property="og:site_name" content="Jess&#39;s Blog">
-<meta property="og:description" content="本文是《What is PNPM &amp; Why You Should Try It As a Frontend Developer》的对照翻译  了解 pnpm——npm&#x2F;yarn的替代方案，了解其优点、依赖管理和用法。 前置疑问：为什么使用 PNPM，它有哪些学习点？ 什么是 pnpm?正如官网所说，快速的，节省磁盘空间的包管理工具 优势 快速的  以下是几个工具的比较： 可以看出，在大">
+<meta property="og:description" content="本文从源码层面进行分析，结合了实际vue项目经验，梳理vue的依赖收集，分析的vue版本为3.3.3本文适合有一定实战经验或阅读经验的vue开发者  响应式基础在了解依赖收集前，我们先了解下vue是如何书写响应式的。 12345&lt;!-- 模板代码 --&gt;&lt;template&gt;    &lt;div&gt;count：&amp;#123;&amp;#123; count &amp;#125;&amp;#12">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp">
-<meta property="og:image" content="https://mqpeng.github.io/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp">
-<meta property="article:published_time" content="2023-08-18T06:28:55.000Z">
-<meta property="article:modified_time" content="2023-08-18T06:52:16.823Z">
+<meta property="article:published_time" content="2023-10-12T02:12:07.000Z">
+<meta property="article:modified_time" content="2023-10-12T05:43:24.936Z">
 <meta property="article:author" content="Joker Spice">
-<meta property="article:tag" content="pnpm">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="vue3">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mqpeng.github.io/images/pnpm/alotta-files.svg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>PNPM是什么以及为什么前端开发者应该尝试使用它 - Jess&#39;s Blog</title>
+  <title>vue是如何收集依赖的 - Jess&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="PNPM是什么以及为什么前端开发者应该尝试使用它"></span>
+            <span id="subtitle" data-typed-text="vue是如何收集依赖的"></span>
           
         </div>
 
@@ -216,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-18 14:28" pubdate>
-          2023年8月18日 下午
+        <time datetime="2023-10-12 10:12" pubdate>
+          2023年10月12日 上午
         </time>
       </span>
     
@@ -228,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2k 字
         
       </span>
     
@@ -239,7 +235,7 @@
         
         
         
-          15 分钟
+          17 分钟
         
       </span>
     
@@ -284,153 +280,20 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">PNPM是什么以及为什么前端开发者应该尝试使用它</h1>
+            <h1 id="seo-header">vue是如何收集依赖的</h1>
             
             
               <div class="markdown-body">
                 
                 <blockquote>
-<p>本文是<a target="_blank" rel="noopener" href="https://javascript.plainenglish.io/what-is-pnpm-why-you-should-try-it-as-a-frontend-developer-69a3a7b34f5b">《What is PNPM &amp; Why You Should Try It As a Frontend Developer》</a>的对照翻译</p>
+<p>本文从源码层面进行分析，结合了实际<code>vue</code>项目经验，梳理<code>vue</code>的依赖收集，分析的<code>vue</code>版本为<code>3.3.3</code><br>本文适合有一定实战经验或阅读经验的<code>vue</code>开发者</p>
 </blockquote>
-<p>了解 pnpm——<code>npm/yarn</code>的替代方案，了解其优点、依赖管理和用法。</p>
-<p>前置疑问：为什么使用 PNPM，它有哪些学习点？</p>
-<h2 id="什么是-pnpm"><a href="#什么是-pnpm" class="headerlink" title="什么是 pnpm?"></a>什么是 pnpm?</h2><p>正如<a target="_blank" rel="noopener" href="https://pnpm.io/zh/">官网</a>所说，<strong>快速的，节省磁盘空间的包管理工具</strong></p>
-<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ol>
-<li>快速的</li>
-</ol>
-<p>以下是几个工具的比较：</p>
-<p>可以看出，在大多数情况下，pnpm 作为黄色部分，包安装速度明显优于<code>npm/yarn</code>，速度会比<code>npm/yarn</code>快 2 倍。</p>
-<table>
-<thead>
-<tr>
-<th>action</th>
-<th>cache</th>
-<th>lockfile</th>
-<th>node_modules</th>
-<th>npm</th>
-<th>pnpm</th>
-<th>Yarn</th>
-<th>Yarn PnP</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>install</td>
-<td></td>
-<td></td>
-<td></td>
-<td>37.7s</td>
-<td>19.3s</td>
-<td>22.1s</td>
-<td>20.2s</td>
-</tr>
-<tr>
-<td>install</td>
-<td>✔</td>
-<td>✔</td>
-<td>✔</td>
-<td>2s</td>
-<td>1.6s</td>
-<td>695ms</td>
-<td>n&#x2F;a</td>
-</tr>
-<tr>
-<td>install</td>
-<td>✔</td>
-<td>✔</td>
-<td></td>
-<td>8.9s</td>
-<td>5.1s</td>
-<td>8.8s</td>
-<td>668ms</td>
-</tr>
-<tr>
-<td>install</td>
-<td>✔</td>
-<td></td>
-<td></td>
-<td>13.7s</td>
-<td>8.6s</td>
-<td>22.8s</td>
-<td>15.2s</td>
-</tr>
-<tr>
-<td>install</td>
-<td></td>
-<td>✔</td>
-<td></td>
-<td>14.2s</td>
-<td>16.8s</td>
-<td>8.9s</td>
-<td>670ms</td>
-</tr>
-<tr>
-<td>install</td>
-<td>✔</td>
-<td></td>
-<td>✔</td>
-<td>2.4s</td>
-<td>3.9s</td>
-<td>16s</td>
-<td>n&#x2F;a</td>
-</tr>
-<tr>
-<td>install</td>
-<td></td>
-<td>✔</td>
-<td>✔</td>
-<td>2s</td>
-<td>1.6s</td>
-<td>681ms</td>
-<td>n&#x2F;a</td>
-</tr>
-<tr>
-<td>install</td>
-<td></td>
-<td></td>
-<td>✔</td>
-<td>2.3s</td>
-<td>15.2s</td>
-<td>16.6s</td>
-<td>n&#x2F;a</td>
-</tr>
-<tr>
-<td>update</td>
-<td>n&#x2F;a</td>
-<td>n&#x2F;a</td>
-<td>n&#x2F;a</td>
-<td>8.9s</td>
-<td>8s</td>
-<td>8.7s</td>
-<td>16.9s</td>
-</tr>
-</tbody></table>
-<p><img src="/images/pnpm/alotta-files.svg" srcset="/img/loading.gif" lazyload alt="Benchmarks"></p>
-<p>总体而言，<code>pnpm</code>的包安装速度仍然明显优于 yarn。</p>
-<ol start="2">
-<li>节省磁盘空间</li>
-</ol>
-<p>在内部管理中，<code>pnpm</code>使用内容可寻址的文件系统来存储磁盘上的所有文件。这个文件系统的优点是：</p>
-<p>相同的包不会重复安装。当使用<code>npm/yarn</code>时，如果有 1000 个项目依赖于<code>lodash</code>，那么<code>lodash</code>可能会被安装 1000 次，并且这部分代码会在磁盘上被写入 1000 个地方。然而，当使用<code>pnpm</code>时，它只会安装一次，并且只在磁盘上写入一个地方。如果你再次使用它，你将会直接使用硬链接。</p>
-<p>即使对于不同版本的包，<code>pnpm</code>也能够大大重用之前版本的代码。例如，如果<code>lodash</code>有 1000 个文件，并且在更新版本之后又增加了一个文件，那么磁盘将不会重写 1001 个文件，而是保留原来的 1000 个文件的硬链接，只写入新的一个文件。</p>
-<ol start="3">
-<li>安全性高</li>
-</ol>
-<p>在使用<code>npm/yarn</code>之前，由于 node_module 的扁平结构，如果<code>A</code>依赖于<code>B</code>，<code>B</code>依赖于<code>C</code>，则<code>A</code>可以直接使用<code>C</code>，但问题是<code>A</code>没有声明<code>C</code>作为依赖项。因此，会出现这种非法访问的情况。然而，<code>pnpm</code>有非常大的“大脑洞”，并创建了一套依赖项管理方法，很好地解决了这个问题，并确保了安全性。</p>
-<h2 id="pnpm依赖管理"><a href="#pnpm依赖管理" class="headerlink" title="pnpm依赖管理"></a><code>pnpm</code>依赖管理</h2><p>回顾一下<code>npm/yarn</code>为什么想要扁平化<code>node_modules</code>，难道不是因为相同的依赖项会被复制多次，路径也变得太长了吗？</p>
-<p>如果你不复制文件，比如通过链接来替代呢？</p>
-<p>首先，我将介绍链接，即软链接和硬链接。这是操作系统提供的机制。硬链接是同一文件的多个引用，而软链接则是创建一个新的文件，该文件的内容指向另一个路径。当然，这两种链接的使用方式是相似的。</p>
-<p>如果你不复制文件，只需将<code>npm</code>包的内容保存在全局仓库中，然后将其他地方都链接起来。</p>
-<p>这样，就不会有多个拷贝导致的浪费磁盘空间的问题，也不会有路径过长的问题。因为路径过长的主要限制是目录层次结构不能太深，现在每个位置的目录都是链接，而不是同一个目录，所以没有长度限制。</p>
-<p>没错，<code>pnpm</code>就是通过这个想法实现的。</p>
-<p>然后删除 node_modules，然后使用<code>pnpm</code>重新安装它，并执行<code>pnpm install</code>。</p>
-<p>你会发现它打印出这句话：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">pnpm install<br></code></pre></td></tr></table></figure>
+<h2 id="响应式基础"><a href="#响应式基础" class="headerlink" title="响应式基础"></a>响应式基础</h2><p>在了解依赖收集前，我们先了解下<code>vue</code>是如何书写响应式的。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 模板代码 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>count：&#123;&#123; count &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>data：&#123;&#123; data.count &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// 脚本代码</span><br><span class="hljs-comment">// ==============</span><br><span class="hljs-comment">// 1. `ref`对象是可变的</span><br><span class="hljs-comment">// 2. 任何`.value`的读操作都会被追踪</span><br><span class="hljs-comment">// 3. 任何`.value`的写操作都会触发关联的副作用</span><br><span class="hljs-keyword">const</span> count = <span class="hljs-title function_">ref</span>(<span class="hljs-number">0</span>)<br>count.<span class="hljs-property">value</span>++<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(count.<span class="hljs-property">value</span>) <span class="hljs-comment">// 1</span><br><br><span class="hljs-comment">// 1. 深层的：响应式会去覆盖所有的可嵌套属性</span><br><span class="hljs-comment">// 2. 如果属性本身是响应式的，响应式覆盖将被忽略</span><br><span class="hljs-comment">// 3. 原生的集合类型(Map、Array、Set)等，响应式覆盖将被忽略</span><br><span class="hljs-comment">// 4. 传入的对象将被包裹`ES Proxy`</span><br><span class="hljs-keyword">const</span> data = <span class="hljs-title function_">reactive</span>(&#123;<br>    <span class="hljs-attr">count</span>: <span class="hljs-number">0</span><br>&#125;)<br>data.<span class="hljs-property">count</span>++<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data.<span class="hljs-property">count</span>) <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/images/pnpm/1_IxAcMI5AHQqvpKu0J_2RaQ.webp" srcset="/img/loading.gif" lazyload alt="output"><br>展开<code>.pnpm</code>文件夹可以看待<br><img src="/images/pnpm/1_Cewnyamzt3myXhsMe8PiiA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>所有依赖项都布局在这里，通过全局存储硬连接，然后通过软链接组织包到包的依赖项。<br>例如，在.pnpm 下的 express，这些是软链接<br><img src="/images/pnpm/1_HiWI8PDjCOC3tXpIxs1UCA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"><br>也就是说，所有依赖项都从全局存储硬链接到 node_modules&#x2F;.pnpm，然后通过软链接相互依赖。</p>
-<p>官方提供了一个示意图，您可以一起查看以理解它：<br><img src="/images/pnpm/1_KiXOhjIsgvXEKoWkWMQ8eA.webp" srcset="/img/loading.gif" lazyload alt=".pnpm"></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="pnpm-install"><a href="#pnpm-install" class="headerlink" title="pnpm install"></a>pnpm install</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># Install axios</span><br>pnpm install axios<br><span class="hljs-comment"># Install axios and add axios to devDependencies</span><br>pnpm install axios -D<br><span class="hljs-comment"># Install axios and add axios to dependencies</span><br>pnpm install axios -S<br></code></pre></td></tr></table></figure>
-
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><strong>感谢谢阅读</strong>，我期待着您的关注和阅读更多高质量的文章。</p>
+<h3 id="ref响应式源码分析"><a href="#ref响应式源码分析" class="headerlink" title="ref响应式源码分析"></a><code>ref</code>响应式源码分析</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">ref</span>(<span class="hljs-params">value?: <span class="hljs-built_in">unknown</span></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createRef</span>(value, <span class="hljs-literal">false</span>)<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">shallowRef</span>(<span class="hljs-params">value?: <span class="hljs-built_in">unknown</span></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createRef</span>(value, <span class="hljs-literal">true</span>)<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">createRef</span>(<span class="hljs-params">rawValue: <span class="hljs-built_in">unknown</span>, shallow: <span class="hljs-built_in">boolean</span></span>) &#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isRef</span>(rawValue)) &#123;<br>    <span class="hljs-keyword">return</span> rawValue<br>  &#125;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RefImpl</span>(rawValue, shallow)<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RefImpl</span>&lt;T&gt; &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">_value</span>: T<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">_rawValue</span>: T<br><br>  <span class="hljs-comment">// Set&lt;ReactiveEffect&gt;(effects?) 依赖集合，保存在响应式对象中</span><br>  <span class="hljs-keyword">public</span> dep?: <span class="hljs-title class_">Dep</span> = <span class="hljs-literal">undefined</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> __v_isRef = <span class="hljs-literal">true</span><br><br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">value: T, <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> __v_isShallow: <span class="hljs-built_in">boolean</span></span>) &#123;<br>    <span class="hljs-comment">// toRaw: 返回原始对象，非响应式对象直接返回，响应式对象将返回原始对象(递归操作)</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_rawValue</span> = __v_isShallow ? value : <span class="hljs-title function_">toRaw</span>(value)<br>    <span class="hljs-comment">// toReactive: return isObject(value) ? reactive(value) : value</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_value</span> = __v_isShallow ? value : <span class="hljs-title function_">toReactive</span>(value)<br>  &#125;<br><br>  <span class="hljs-keyword">get</span> <span class="hljs-title function_">value</span>() &#123;<br>    <span class="hljs-title function_">trackRefValue</span>(<span class="hljs-variable language_">this</span>) <span class="hljs-comment">// 最终调用 trackEffects(ref.dep || (ref.dep = createDep()))</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">_value</span><br>  &#125;<br><br>  <span class="hljs-keyword">set</span> <span class="hljs-title function_">value</span>(<span class="hljs-params">newVal</span>) &#123;<br>    <span class="hljs-keyword">const</span> useDirectValue = <span class="hljs-variable language_">this</span>.<span class="hljs-property">__v_isShallow</span> || <span class="hljs-title function_">isShallow</span>(newVal) || <span class="hljs-title function_">isReadonly</span>(newVal)<br>    newVal = useDirectValue ? newVal : <span class="hljs-title function_">toRaw</span>(newVal)<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">hasChanged</span>(newVal, <span class="hljs-variable language_">this</span>.<span class="hljs-property">_rawValue</span>)) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_rawValue</span> = newVal<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_value</span> = useDirectValue ? newVal : <span class="hljs-title function_">toReactive</span>(newVal)<br>      <span class="hljs-title function_">triggerRefValue</span>(<span class="hljs-variable language_">this</span>, newVal)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在<code>ref</code>读操作的时候会调用<code>trackRefValue</code>，最终调用<code>trackEffects</code>进行依赖收集<br>另一方面，依赖收集只会存在在<code>watch</code>、<code>computed</code>、<code>template bind</code>等进行(<code>watchEffect</code>)</p>
 
                 
               </div>
@@ -449,7 +312,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="category-chain-item">前端基础</a>
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/" class="category-chain-item">前端深入浅出</a>
   
   
 
@@ -464,7 +327,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/pnpm/" class="print-no-link">#pnpm</a>
+        <a href="/tags/%E5%89%8D%E7%AB%AF/" class="print-no-link">#前端</a>
+      
+        <a href="/tags/vue/" class="print-no-link">#vue</a>
+      
+        <a href="/tags/vue3/" class="print-no-link">#vue3</a>
       
     </div>
   
@@ -476,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>PNPM是什么以及为什么前端开发者应该尝试使用它</div>
-      <div>https://mqpeng.github.io/2023/08/18/pnpm/</div>
+      <div>vue是如何收集依赖的</div>
+      <div>https://mqpeng.github.io/2023/10/12/vue-dep/</div>
     </div>
     <div class="license-meta">
       
@@ -489,7 +356,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月18日</div>
+          <div>2023年10月12日</div>
         </div>
       
       
@@ -521,18 +388,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/18/monorepo-pnpm/" title="Monorepo及其相关工具">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Monorepo及其相关工具</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/16/task-pool-go/" title="golang实现任务池管理器">
-                        <span class="hidden-mobile">golang实现任务池管理器</span>
+                      <a href="/2023/08/18/monorepo-pnpm/" title="Monorepo及其相关工具">
+                        <span class="hidden-mobile">Monorepo及其相关工具</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
